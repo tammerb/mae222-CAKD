@@ -1,10 +1,10 @@
 # MAE 222 Project Team 1
 
 ## Members:
-Tammer Barkouki
-Derek Brangham
-Zhixiang Chao
-Nicholas Taylor
+- Tammer Barkouki
+- Derek Brangham
+- Zhixiang Chao
+- Nicholas Taylor
 
 ## Initial Project; Report Due Oct 21st
 Code 2.2 Newton Raphson Solution
