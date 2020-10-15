@@ -1,10 +1,15 @@
-# Instructions
+# MAE 222 Project Team 1
 
-## Heading 1
+## Members:
+Tammer Barkouki
+Derek Brangham
+Zhixiang Chao
+Nicholas Taylor
 
-## Heading 2
+## Initial Project; Report Due Oct 21st
+Code 2.2 Newton Raphson Solution
 
-_makes this italic_
-
-**makes it bold**
-
+## Major Project
+Kinematic Analysis of mechanical systems
+- Code 3.9 - planar
+- Code 3.11 - spatial
