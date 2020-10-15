@@ -1,4 +1,6 @@
 % Newton Raphson Solution of k Equaitons Phi(q)=0 for k Variables q
+% Single variable version using the diff function for finding the 1st derivative
+% in the Taylor Expansion
 
 syms q;
 qtol=0.001;  % Enter error tolerance in satisfying Phi(q)=0
