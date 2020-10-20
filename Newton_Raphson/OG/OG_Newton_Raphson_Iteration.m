@@ -1,4 +1,4 @@
-% Newton Raphson Solution of k Equaitons Phi(q)=0 for k Variables q
+% Newton-Raphson Solution of k Equations Phi(q)=0 for k Variables q
 
 qtol=0.001;  % Error tolerance in satisfying Phi(q)=0
 q=q0;   % Initial solution estimate
@@ -13,4 +13,4 @@ q=q+delq;
 err=norm(Phi);
 i=i+1;    
 end
-iter=i-1;  %Report number of iteations
+iter=i-1;  %Report number of iterations
