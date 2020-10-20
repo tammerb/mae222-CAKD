@@ -6,8 +6,8 @@ q=q0;   % Initial solution estimate
 i=1;    %Iteration counter
 err=qtol+1;
 while err >qtol  %Iteration for q, through line 15
-Phi=PhiEval(q);
-Phiq=PhiqEval(q);
+Phi=PhiEval(q); %Hard code equation(s) in Phieval function
+Phiq=PhiqEval(q); %Hard code equation(s) in Phiqeval function
 delq=-Phiq\(Phi);  %Newton-Raphson iteration
 q=q+delq;
 err=norm(Phi);
