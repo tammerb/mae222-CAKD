@@ -1,17 +1,16 @@
 function [nb,ngc,nh,nhc,nd,PJDT,q0e]=AppData(app)
 
-
 %Data in this beginning section does not change
 %To modify data a particular system, enter data into the applicable "app"
 
 %Unit Vectors for x & y dir
-ux=[1;0];       %can be used for when body is on x axix
-uy=[0;1];       %can be used for when body is on y axis
-%global ux uy 
+%ux=[1;0];       %can be used for when body is on x axix
+%uy=[0;1];       %can be used for when body is on y axis
+global ux uy zer
 
 %Zero vector of length 2
 %used to populate null fields in the Planar Joint Data Table
-zer=zeros(2,1);
+%zer=zeros(2,1);
 
 
 %% 
@@ -304,13 +303,27 @@ q0e=[q10;q20;q30];      %total system
 end
 
 %%
-ijRows=PJDT(2:3,:);             %ijRows is subset of PJDT of bodies for i and j
+
+%Error Check number of bodies defined in the system
+ijRows=PJDT(2:3,:);             %ijRows is subset of PJDT containing i and j values
 [CountBod]=unique(ijRows);      %defines unique values for i and j
 NumBod=numel(CountBod)-1;       %counts up unique i and j values (subtracts for ground "0")
 if NumBod~=nb
-    disp('Error in # of bodies defined')
-    error('Check nb value and body definitions in joints. Unique values of i and j (not including ground) should match nb')
+    errorText=sprintf('Error in # of bodies defined \nCheck "nb" value and chosen body values (i&j) for each joint. \n# of unique values of i and j (not including ground) should match "nb"');
+    error(errorText)
+else
+end
 
+%Error Check number of degrees of freedom defined for the system
+%The following will count number of holonomic constraints equations from joint types
+%and compare to "nhc" value
+RevSum=2*sum(PJDT(1,:)==1);         %Revolute Joint eliminates 2 deg of freedom
+TranSum=2*sum(PJDT(1,:)==2);        %Translational Joint eliminates 2 deg of freedom
+DistSum=1*sum(PJDT(1,:)==3);        %Distance constraint elimnates 1 deg of freedom
+ConstSum=RevSum+TranSum+DistSum;    %Sum the # of holonomic constraints
+if ConstSum~=nhc
+    errortext=sprintf('Error in defined degrees of freedom.\nCheck "nhc" value and values for T in PJDT table');
+    error(errortext)
 else
 end
 
