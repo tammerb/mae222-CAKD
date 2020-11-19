@@ -24,7 +24,7 @@ hvar=1;             %hvar=1, variable h;hvar=2, constant h
 
 tfinal=1;           %Final simulation time
 
-integ=4;            %integ=1-Impl ODE Trap; integ=2-Impl ODE SDIRK54; 
+integ=8;            %integ=1-Impl ODE Trap; integ=2-Impl ODE SDIRK54; 
                     %integ=3-Impl Ind0 Trap; integ=4-Impl Ind0 SDIRK54;
                     %integ=5-Expl ODE Nystrom4; integ=6-Expl ODE RKFN45;
                     %integ=7-Expl Ind0 Nystrom4; integ=8-Expl Ind0 RKFN45
@@ -524,4 +524,4 @@ ylabel('x2,x2d')
 yyaxis right
 plot(t(2:end), BCondRat(2:end))
 ylabel('BCond Condition Number')
-title('K = 50000, C = 100, e10=3.5, integ=4-Impl Ind0 SDIRK54')
+title('K = 50000, C = 100, e10=3.5, integ=8-Expl Ind0 RKFN45')

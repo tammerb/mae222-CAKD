@@ -320,7 +320,7 @@ PMDT=[[200;450],[25;0.02]];
     %call a function here for Fc piecewise in pg 394, Vol 1
     %C=damping coefficient,el0=spring free length,F=const. force
 % PTSDAT(:,1)=[2;0;0;0;2*ux;100;0;0.2;0];
-PTSDAT(:,1)=[2;0;0;0;0.5*ux;50000;100;3.5;0];
+PTSDAT(:,1)=[2;0;0;0;1.5*ux;100;100;0.2;0];
 
 
 
