@@ -1,4 +1,5 @@
 # MAE 222: Advanced Dynamics
+## Computer-Aided Kinematics and Dynamics (CAKD)
 
 ## Team 1 Members:
 - Tammer Barkouki
