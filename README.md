@@ -1,6 +1,6 @@
-# MAE 222 Project Team 1
+# MAE 222: Advanced Dynamics
 
-## Members:
+## Team 1 Members:
 - Tammer Barkouki
 - Derek Brangham
 - Zhixiang Chao
