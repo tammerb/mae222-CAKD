@@ -383,7 +383,7 @@ end
 
 
 
-if app==8   %4-Bar mechanism, 
+if app==8   %4-Bar mechanism, model 2 
     
 nb=2;       %Number of bodies
 ngc=7*nb;   %number of generalized coordinates
@@ -392,25 +392,30 @@ nhc=11;      %Number of holonomic constraint equations
 nc=nhc+nb;  %Number of constraint equations
 nv=ngc-nc;
 nu=nc;
-NTSDA=0;    %Number of TSDA force elements
+NTSDA=0;    %Number of TSDA force elements --------------
 
 ux=[1;0;0];
 uy=[0;1;0];
 uz=[0;0;1];
 zer=zeros(3,1);
 
-%SJDT(22,nh): Joint Data Table 
+%SJDT(22,nh): Joint Data Table ----------------
 %SJTd(:,k)=[t;i;j;sipr;sjpr;d;vxipr;vzipr;vxjpr;vzjpr]; 
     %k=joint No.; t=joint type(1=Dist,2=Sph,3=Cyl, 4=Rev, 5=Tran, 
     %6=Univ, 7=Strut, 8=Rev-Sph); i&j=bodies conn.,i>0;
     %si&jpr=vectors to Pi&j; d=dist.; vxipr, vzipr, vxjpr, vzjpr
-SJDT(:,1)=[4;0;1;z3;z3;0;ux;uz;ux;uz];  %A Rev. - Body 1 to Ground
-SJDT(:,2)=[4;3;0;[0;3.7;0];[-4;-8.5;0];0;[1;3.7;0];[0;2.7;0];[-4;-9.5;0];[-3;-8.5;0]];   %D Rev. - Body 2 to ground
-SJDT(:,3)=[2;1;2;[0;0;2];[0;6.1;0];12.19;[0.75;-0.662;2.0];[0.244;0.277;2.929];[0;6.1;1.0];[0;6.1;0]];   %B Spher. - Body 1 to coupler
+    
+SJDT(:,1)=[4;0;1;z3;z3;0;uz;ux;uz;ux];  %A Rev. - Body 1 to Ground
+SJDT(:,2)=[4;3;0;[0;3.7;0];[-4;-8.5;0];0;-uy;ux;[-4;-9.5;0];ux];   %D Rev. - Body 2 to Ground
+SJDT(:,3)=[1;1;2;2*uz;-3.7*uy;12.19;ux;uy;uy;ux];  %Dist-Body 1 to 2
+
+% SJDT(:,1)=[4;1;0;z3;z3;0;uz;ux;uz;ux];  %Rev. - Body 1 to Ground 
+% SJDT(:,2)=[4;2;0;[0;3.7;0];[-4;-8.5;0];0;[0;2.7;0];[1;3.7;0];[-3;-8.5;0];[-4;-9.5;0]];  %Rev. - Body 2 to Ground 
+
 
 %SMDT(4,nb): Mass Data Table (With diagonal inertia matrix) 
 %SMDT=[[m1;J11;J12,J13],...,[mnb;Jnb1;Jnb2;Jnb3]]
-SMDT=[[2.0;4.0;2.0;0],[1.0;12.4;0.01;0],[1.0;4.54;0.01;0]];
+SMDT=[[2;4;2;0],[1;4.54;0.01;0]];
 
 %STSDAT(12,1): TSDA Data Table
 if NTSDA==0
@@ -419,24 +424,29 @@ end
 %STSDAT(:,T)=[i;j;sipr;sjpr;K;C;el0;F];  
     %T=TSDA No.; i&j=bodies conn.;si&jpr=vectors to Pi&j; K=spring constant;
     %C=damping coefficient; el0=spring free length; F=const. force
-% STSDAT(:,1)=[1;0;z3;z3;0;0;0;1];
+%STSDAT(:,1)=[1;2;ux+10*uy;z3;10;1;10.1;0];
 
 %Initial generalized coordinates
-r10=[0.00016;0.00005;-0.00027];
-p10=[1;0.00001;-0.00004;0.00005];
-r20=[-3.753;-4.2502;4.2553];
-p20=[0.87944;-0.29098;-0.27410;-0.2591];
-r30=[-5.753;-8.5001;3.2553];
-p30=[0.60687;-0.36245;0.36247;-0.60684];
-q0=[r10;p10;r20;p20;r30;p30];
+r10=[0;0;0];
+p10=[1;0;0;0];
+r20=[-5.75;-8.5;3.25];
+p20=[0.607;-0.36;0.36;-0.61];
+q0=[r10;p10;r20;p20];
+% 
+% omeg1pr0=[10^-12;10^-12;pi];
+% r1d0=atil(omeg1pr0)*ux;
+% p1d0=0.5*GEval(p10)'*omeg1pr0;
 r1d0=[0;0;0];
 p1d0=[0;0;0;0];
 r2d0=[0;0;0];
 p2d0=[0;0;0;0];
-r3d0=[0;0;0];
-p3d0=[0;0;0;0];
-qd0=[r1d0;p1d0;r2d0;p2d0;r3d0;p3d0];
+qd0=[r1d0;p1d0;r2d0;p2d0];
+
+
+
 end
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
