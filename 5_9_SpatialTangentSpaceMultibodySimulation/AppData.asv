@@ -332,7 +332,7 @@ nhc=17;      %Number of holonomic constraint equations
 nc=nhc+nb;  %Number of constraint equations
 nv=ngc-nc;
 nu=nc;
-NTSDA=1;    %Number of TSDA force elements
+NTSDA=0;    %Number of TSDA force elements
 
 ux=[1;0;0];
 uy=[0;1;0];
@@ -344,9 +344,9 @@ zer=zeros(3,1);
     %k=joint No.; t=joint type(1=Dist,2=Sph,3=Cyl, 4=Rev, 5=Tran, 
     %6=Univ, 7=Strut, 8=Rev-Sph); i&j=bodies conn.,i>0;
     %si&jpr=vectors to Pi&j; d=dist.; vxipr, vzipr, vxjpr, vzjpr
-SJDT(:,1)=[4;1;0;z3;z3;0;ux;uz;ux;uz];  %A Rev. - Body 1 to Ground
-SJDT(:,2)=[4;3;0;[0;3.7;0];[-4;-8.5;0];0;[1;3.7;0];[0;2.7;0];[-4;-9.5;0];[-3;-8.5;0]];   %D Tran. - Body 1 to 2
-SJDT(:,3)=[6;1;2;[0;0;2];[0;6.1;0];0;[0.75;-0.662;2.0];[0.244;0.277;2.929];[0;6.1;1.0];[0;6.1;0]];   %B Univ. - Body 1 to 2
+SJDT(:,1)=[4;0;1;z3;z3;0;uz;ux;uz;ux];  %A Rev. - Body 1 to Ground
+SJDT(:,2)=[4;3;0;[0;3.7;0];[-4;-8.5;0];0;-uy;[1;0;0];[-4;-9.5;0];[0;-1;0]];   %D Rev. - Body 3 to Ground
+SJDT(:,3)=[6;1;2;[0;0;2];[0;6.1;0];0;[0.244;0.277;2.929];[-0.75;0.662;0];[0;6.1;0];[0;0;-1.0]];   %B Univ. - Body 1 to 2
 SJDT(:,4)=[2;2;3;[0;-6.1;0];[0;-3.7;0];0;[0;-6.1;1];[0;-5.7;0];[0;-3.7;1];[0;-2.7;0]];   %C Spher. - Body 2 to 3
 
 %SMDT(4,nb): Mass Data Table (With diagonal inertia matrix) 
@@ -360,7 +360,7 @@ end
 %STSDAT(:,T)=[i;j;sipr;sjpr;K;C;el0;F];  
     %T=TSDA No.; i&j=bodies conn.;si&jpr=vectors to Pi&j; K=spring constant;
     %C=damping coefficient; el0=spring free length; F=const. force
-STSDAT(:,1)=[1;0;z3;z3;10;1;10.1;0];
+% STSDAT(:,1)=[1;0;z3;z3;0;0;0;1];
 
 %Initial generalized coordinates
 r10=[0.00016;0.00005;-0.00027];
@@ -381,5 +381,64 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
+if app==8   %4-Bar mechanism, 
+    
+nb=2;       %Number of bodies
+ngc=7*nb;   %number of generalized coordinates
+nh=4;       %Number of holonomic constraints
+nhc=11;      %Number of holonomic constraint equations
+nc=nhc+nb;  %Number of constraint equations
+nv=ngc-nc;
+nu=nc;
+NTSDA=0;    %Number of TSDA force elements
+
+ux=[1;0;0];
+uy=[0;1;0];
+uz=[0;0;1];
+zer=zeros(3,1);
+
+%SJDT(22,nh): Joint Data Table 
+%SJTd(:,k)=[t;i;j;sipr;sjpr;d;vxipr;vzipr;vxjpr;vzjpr]; 
+    %k=joint No.; t=joint type(1=Dist,2=Sph,3=Cyl, 4=Rev, 5=Tran, 
+    %6=Univ, 7=Strut, 8=Rev-Sph); i&j=bodies conn.,i>0;
+    %si&jpr=vectors to Pi&j; d=dist.; vxipr, vzipr, vxjpr, vzjpr
+SJDT(:,1)=[4;0;1;z3;z3;0;ux;uz;ux;uz];  %A Rev. - Body 1 to Ground
+SJDT(:,2)=[4;3;0;[0;3.7;0];[-4;-8.5;0];0;[1;3.7;0];[0;2.7;0];[-4;-9.5;0];[-3;-8.5;0]];   %D Rev. - Body 2 to ground
+SJDT(:,3)=[2;1;2;[0;0;2];[0;6.1;0];12.19;[0.75;-0.662;2.0];[0.244;0.277;2.929];[0;6.1;1.0];[0;6.1;0]];   %B Spher. - Body 1 to coupler
+SJDT(:,4)=[2;2;3;[0;-6.1;0];[0;-3.7;0];12.19;[0;-6.1;1];[0;-5.7;0];[0;-3.7;1];[0;-2.7;0]];   %C Spher. - Body 2 to coupler
+
+%SMDT(4,nb): Mass Data Table (With diagonal inertia matrix) 
+%SMDT=[[m1;J11;J12,J13],...,[mnb;Jnb1;Jnb2;Jnb3]]
+SMDT=[[2.0;4.0;2.0;0],[1.0;12.4;0.01;0],[1.0;4.54;0.01;0]];
+
+%STSDAT(12,1): TSDA Data Table
+if NTSDA==0
+STSDAT=zeros(12,NTSDA);
+end
+%STSDAT(:,T)=[i;j;sipr;sjpr;K;C;el0;F];  
+    %T=TSDA No.; i&j=bodies conn.;si&jpr=vectors to Pi&j; K=spring constant;
+    %C=damping coefficient; el0=spring free length; F=const. force
+% STSDAT(:,1)=[1;0;z3;z3;0;0;0;1];
+
+%Initial generalized coordinates
+r10=[0.00016;0.00005;-0.00027];
+p10=[1;0.00001;-0.00004;0.00005];
+r20=[-3.753;-4.2502;4.2553];
+p20=[0.87944;-0.29098;-0.27410;-0.2591];
+r30=[-5.753;-8.5001;3.2553];
+p30=[0.60687;-0.36245;0.36247;-0.60684];
+q0=[r10;p10;r20;p20;r30;p30];
+r1d0=[0;0;0];
+p1d0=[0;0;0;0];
+r2d0=[0;0;0];
+p2d0=[0;0;0;0];
+r3d0=[0;0;0];
+p3d0=[0;0;0;0];
+qd0=[r1d0;p1d0;r2d0;p2d0;r3d0;p3d0];
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
 
