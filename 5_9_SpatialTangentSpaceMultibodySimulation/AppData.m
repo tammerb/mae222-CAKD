@@ -387,7 +387,7 @@ if app==8   %4-Bar mechanism,
     
 nb=2;       %Number of bodies
 ngc=7*nb;   %number of generalized coordinates
-nh=4;       %Number of holonomic constraints
+nh=3;       %Number of holonomic constraints
 nhc=11;      %Number of holonomic constraint equations
 nc=nhc+nb;  %Number of constraint equations
 nv=ngc-nc;
@@ -407,7 +407,6 @@ zer=zeros(3,1);
 SJDT(:,1)=[4;0;1;z3;z3;0;ux;uz;ux;uz];  %A Rev. - Body 1 to Ground
 SJDT(:,2)=[4;3;0;[0;3.7;0];[-4;-8.5;0];0;[1;3.7;0];[0;2.7;0];[-4;-9.5;0];[-3;-8.5;0]];   %D Rev. - Body 2 to ground
 SJDT(:,3)=[2;1;2;[0;0;2];[0;6.1;0];12.19;[0.75;-0.662;2.0];[0.244;0.277;2.929];[0;6.1;1.0];[0;6.1;0]];   %B Spher. - Body 1 to coupler
-SJDT(:,4)=[2;2;3;[0;-6.1;0];[0;-3.7;0];12.19;[0;-6.1;1];[0;-5.7;0];[0;-3.7;1];[0;-2.7;0]];   %C Spher. - Body 2 to coupler
 
 %SMDT(4,nb): Mass Data Table (With diagonal inertia matrix) 
 %SMDT=[[m1;J11;J12,J13],...,[mnb;Jnb1;Jnb2;Jnb3]]
