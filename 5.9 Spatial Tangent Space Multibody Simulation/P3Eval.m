@@ -106,8 +106,10 @@ end
 %Universal Constraint
 if SJDT(1,k)==6
 [i,j,s1pr,s2pr,vz1pr,vz2pr]=UnivPart(k,SJDT);    
-[P3ks1,P3ks2]=bbP3sph(i,j,s1pr,s2pr,tn,q,par);
-[P3kd11,P3kd12]=bbP3dot1(i,j,vz1pr,vz2pr,tn,q,par);
+% [P3ks1,P3ks2]=bbP3sph(i,j,s1pr,s2pr,tn,q,par);
+[P3ks1,P3ks2]=bbP3sph(tn,q,qd,par);
+% [P3kd11,P3kd12]=bbP3dot1(i,j,vz1pr,vz2pr,tn,q,par);
+[P3kd11,P3kd12]=bbP3dot1(i,j,vz1pr,vz2pr,tn,q,qd,par);
 P3k1=[P3ks1;P3kd11];
 P3k2=[P3ks2;P3kd12];
 P3=Add(P3,P3k1,m,7*(i-1));

@@ -141,6 +141,7 @@ end
 %Universal Constraint
 if SJDT(1,k)==6
 [i,j,s1pr,s2pr,vz1pr,vz2pr]=UnivPart(k,SJDT);    
+% [P4ks11,P4ks12,P4ks22]=bbP4sph(i,j,s1pr,s2pr,tn,q,par);
 [P4ks11,P4ks12,P4ks22]=bbP4sph(i,j,s1pr,s2pr,tn,q,etak,par);
 [P4kd111,P4kd112,P4kd122]=bbP4dot1(i,j,vz1pr,vz2pr,tn,q,par);
 P4k11=P4ks11+P4kd111;
