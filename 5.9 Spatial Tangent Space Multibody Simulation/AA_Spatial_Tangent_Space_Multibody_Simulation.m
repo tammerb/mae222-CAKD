@@ -1,5 +1,6 @@
 %AA Spatial Tangent Space Multibody Simulation
-clear all;
+clear;
+clc;
 utol=10^-8;     %Tolerance in solving for u
 Btol=10^-8;     %Convergence criteria in B iteration
 intol=10^-6;     %Tolerance in solving discretized equations of motion
@@ -19,9 +20,9 @@ h=h0;
 hmax=0.001;
 hvar=1;         %hvar=1, variable h;hvar=2, constant h
 
-tfinal=2.5;
+tfinal=2;
 
-integ=1;            %integ=1-Impl ODE Trap; integ=2-Impl ODE SDIRK54; 
+integ=6;            %integ=1-Impl ODE Trap; integ=2-Impl ODE SDIRK54; 
                     %integ=3-Impl Ind0 Trap; integ=4-Impl Ind0 SDIRK54;
                     %integ=5-Expl ODE Nystrom4; integ=6-Expl ODE RKFN45;
                     %integ=7-Expl Ind0 Nystrom4; integ=8-Expl Ind0 RKFN45
@@ -38,7 +39,7 @@ g=9.8;
     %app=5, 4-Translating Mass Model
     %app=6, Rotating Disk with Translating Body
     
-app=7;
+app=8;
 
 [nb,ngc,nh,nc,nv,nu,NTSDA,SJDT,SMDT,STSDAT,q0,qd0]=AppData(app);
 
@@ -416,26 +417,6 @@ theta1(n)=theta1(n-1)+h*omegaz1(n);
 dely2pr(n)=(A1'*(r2-A1*ux))'*uy;
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if app==7       %4-bar model 1
-theta1(1)=0;
-r1=[q(1);q(2);q(3)];
-p1=[q(4);q(5);q(6);q(7)];
-
-r2=[q(8);q(9);q(10)];
-p2=[q(11);q(12);q(13);q(14)];
-
-r3=[q(15);q(16);q(17)];
-p3=[q(18);q(19);q(20);q(21)];
-
-% p1d=[qd(4);qd(5);qd(6);qd(7)];
-% r2=[q(8);q(9);q(10)];
-% E1=EEval(p1);
-% A1=ATran(p1);
-% omegaz1(n)=2*uz'*E1*p1d;
-% theta1(n)=theta1(n-1)+h*omegaz1(n);
-% dely2pr(n)=(A1'*(r2-A1*ux))'*uy;
-end
 
 %Calculate constraint error
 Phi=PhiEval(tn,q,SJDT,par);
@@ -447,10 +428,5 @@ AccConstrNorm(n)=norm(Phiq*qdd+Gam);
 
 end
 
-figure
-plot(x1,y1)
-xlabel('time')
-ylabel('z of point B')
-title('----')
-grid on
+
 
